@@ -808,6 +808,7 @@ function renderGrid(category) {
 function createCard(item, category) {
     const card = document.createElement('div');
     card.className = 'card';
+    card.dataset.cardId = item.id; // pour updateCardDisplay()
     if (item.fullWidth) card.classList.add('full-width');
 
     // Get current price
@@ -1548,11 +1549,17 @@ function updatePhoneRequirement() {
         phoneInput.required = false;
         phoneFormGroup.style.display = 'block';
         if (phoneOptional) phoneOptional.style.display = 'inline';
+    } else if (orderMode === 'livraison') {
+        // Livraison : téléphone obligatoire
+        phoneInput.required = true;
+        phoneFormGroup.style.display = 'block';
+        if (phoneOptional) phoneOptional.style.display = 'none';
     } else {
+        // Emporter : téléphone optionnel mais visible
         phoneInput.required = false;
-        phoneFormGroup.style.display = 'none';
+        phoneFormGroup.style.display = 'block';
+        if (phoneOptional) phoneOptional.style.display = 'inline';
     }
-    console.log('[DEBUG] phoneInput.required:', phoneInput.required);
 }
 
 // ==========================================
@@ -1784,8 +1791,10 @@ function sendOrder(e) {
         });
         // Sauvegarder MENU modifié dans localStorage
         localStorage.setItem('lacasadepoulet_menu_override', JSON.stringify(MENU));
-        // Mettre à jour l'affichage des catégories pour refléter les stocks
-        renderCategories();
+        // Mettre à jour les cartes des articles commandés (perf: pas besoin de tout rerender)
+        orderData.items.forEach(item => {
+            updateCardDisplay(item.id);
+        });
 
         // Open WhatsApp
         window.open(url, '_blank');
