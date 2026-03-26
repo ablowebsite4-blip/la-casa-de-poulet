@@ -354,7 +354,7 @@ function initializeStocks() {
         if (cat.items) {
             cat.items.forEach(item => {
                 if (item.stock === undefined) {
-                    item.stock = 999; // virtually unlimited
+                    item.stock = 100; // stock par défaut raisonnable
                 }
             });
         }
@@ -741,10 +741,12 @@ function initNavigation() {
         navList.appendChild(li);
     });
 
-    navList.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
+    // Event delegation : un seul listener sur le conteneur
+    navList.addEventListener('click', (e) => {
+        const link = e.target.closest('.nav-link');
+        if (link) {
             switchCategory(link.dataset.category);
-        });
+        }
     });
 }
 
@@ -774,6 +776,7 @@ function renderCategories() {
         section.className = 'category-section';
         section.dataset.category = cat;
 
+        // Les boissons ont une grille spéciale avec emoji plus grand (drinks-grid)
         const gridClass = cat === 'boissons' ? 'grid drinks-grid' : 'grid';
         const label = currentLang === 'ar' && MENU[cat].labelAr ? MENU[cat].labelAr : MENU[cat].label;
 
