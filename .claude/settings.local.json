@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.json$|\\\\.txt$|README\")"
+      "Bash(grep -E \"\\\\.json$|\\\\.txt$|README\")",
+      "Bash(cd:*)",
+      "Bash(ls -la *.js)",
+      "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v3.js)",
+      "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v4.js)"
     ]
   }
 }

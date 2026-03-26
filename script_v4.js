@@ -1756,6 +1756,13 @@ function sendOrder(e) {
     closeModal();
     clearCart();
 
+    // Vider aussi le localStorage complètement après commande
+    localStorage.removeItem('lacasadepoulet_cart');
+    localStorage.removeItem('lacasadepoulet_pizza_sizes');
+    localStorage.removeItem('lacasadepoulet_plat_options');
+    localStorage.removeItem('lacasadepoulet_table');
+    localStorage.removeItem('lacasadepoulet_order_mode');
+
     // Reset form
     nameInput.value = '';
     districtInput.value = '';
