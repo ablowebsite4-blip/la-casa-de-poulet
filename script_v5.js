@@ -1355,14 +1355,33 @@ function initMobileOptimizations() {
 
     // Smooth scroll to active category on nav click (mobile)
     navList.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 const category = link.dataset.category;
                 const section = document.querySelector(`.category-section[data-category="${category}"]`);
                 if (section) {
-                    const offset = 120;
-                    const top = section.offsetTop - offset;
-                    window.scrollTo({ top, behavior: 'smooth' });
+                    // Calculate offset accounting for fixed header
+                    const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+                    const navHeight = document.querySelector('.nav')?.offsetHeight || 0;
+                    const totalOffset = headerHeight + navHeight + 20;
+
+                    // Use scrollIntoView for smoother, more reliable scrolling
+                    section.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // Fine-tune position if needed
+                    setTimeout(() => {
+                        const currentScroll = window.pageYOffset;
+                        const sectionTop = section.offsetTop;
+                        if (sectionTop > totalOffset) {
+                            window.scrollTo({
+                                top: sectionTop - totalOffset,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 300);
                 }
             }
         });
