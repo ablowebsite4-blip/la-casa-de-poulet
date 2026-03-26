@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "npx serve .",
-    "build": "mkdir -p public && cp index.html styles.css script_v4.js manifest.json sw.js menu.json _headers public/ && cp -r icons public/"
+    "build": "rm -rf public && mkdir -p public && cp -r * public/ 2>/dev/null || true"
   }
 }
