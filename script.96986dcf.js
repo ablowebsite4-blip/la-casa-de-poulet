@@ -1464,7 +1464,6 @@ function initOrderModeSelection() {
 
     modeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            console.log('[DEBUG] Mode button clicked:', btn.dataset.mode);
             // Remove active class from all buttons
             modeBtns.forEach(b => {
                 b.classList.remove('active');
@@ -1481,7 +1480,6 @@ function initOrderModeSelection() {
             updateTableButtonsState();
             updatePhoneRequirement();
             validateForm();
-            console.log('[DEBUG] orderMode set to:', orderMode);
         });
     });
 
@@ -1538,8 +1536,6 @@ function updateAddressOptionalLabel() {
 function updatePhoneRequirement() {
     const phoneOptional = document.getElementById('phoneOptional');
     const phoneFormGroup = phoneInput ? phoneInput.closest('.form-group') : null;
-    console.log('[DEBUG] updatePhoneRequirement:', { orderMode, phoneInputExists: !!phoneInput, phoneFormGroupExists: !!phoneFormGroup });
-
     if (!phoneInput || !phoneFormGroup) {
         console.warn('[DEBUG] phoneInput or form-group not found!');
         return;
