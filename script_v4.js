@@ -1353,20 +1353,7 @@ function initMobileOptimizations() {
         }, {passive: true});
     });
 
-    // Smooth scroll to active category on nav click (mobile)
-    navList.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                const category = link.dataset.category;
-                const section = document.querySelector(`.category-section[data-category="${category}"]`);
-                if (section) {
-                    const offset = 120;
-                    const top = section.offsetTop - offset;
-                    window.scrollTo({ top, behavior: 'smooth' });
-                }
-            }
-        });
-    });
+    // No auto-scroll on category click - dishes appear in place
 
     // Auto-close keyboard on submit
     submitBtn.addEventListener('click', () => {
