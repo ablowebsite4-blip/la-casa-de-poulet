@@ -1360,28 +1360,12 @@ function initMobileOptimizations() {
                 const category = link.dataset.category;
                 const section = document.querySelector(`.category-section[data-category="${category}"]`);
                 if (section) {
-                    // Calculate offset accounting for fixed header
-                    const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-                    const navHeight = document.querySelector('.nav')?.offsetHeight || 0;
-                    const totalOffset = headerHeight + navHeight + 20;
-
-                    // Use scrollIntoView for smoother, more reliable scrolling
+                    // Scroll so the section title appears just below the sticky nav
+                    // Use scrollIntoView with block: 'start' then adjust slightly
                     section.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-
-                    // Fine-tune position if needed
-                    setTimeout(() => {
-                        const currentScroll = window.pageYOffset;
-                        const sectionTop = section.offsetTop;
-                        if (sectionTop > totalOffset) {
-                            window.scrollTo({
-                                top: sectionTop - totalOffset,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }, 300);
                 }
             }
         });
