@@ -4,6 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "npx serve .",
-    "build": "echo 'Static site - no build needed'"
+    "build": "mkdir -p public && cp index.html styles.css script_v4.js manifest.json sw.js menu.json _headers public/ && cp -r icons public/"
   }
 }
