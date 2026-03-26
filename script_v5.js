@@ -40,6 +40,7 @@ const TRANSLATIONS = {
         added_to_cart: "ajouté au panier",
         empty_cart: "Panier vide",
         cart_cleared: "Panier vidé",
+        offline_mode: "Mode hors-ligne",
         clear_cart_title: "Vider le panier ?",
         clear_cart_desc: "Êtes-vous sûr de vouloir supprimer tous les articles ?",
         cancel: "Annuler",
@@ -78,6 +79,7 @@ const TRANSLATIONS = {
         added_to_cart: "تزاد فالسلة",
         empty_cart: "السلة خاوية",
         cart_cleared: "السلة خوات",
+        offline_mode: "وضع غير متصل",
         clear_cart_title: "نخويو السلة؟",
         clear_cart_desc: "واش متأكد بغيتي تمسح كاع الوجبات؟",
         cancel: "إلغاء",
@@ -97,6 +99,9 @@ const TRANSLATIONS = {
 // ==========================================
 // MENU DATA (Default + Dynamic Loading)
 // ==========================================
+// NOTE: DEFAULT_MENU est un fallback hors-ligne. Il doit être maintenu synchronisé
+// avec menu.json (source principale). L'admin editor modifie uniquement le localStorage,
+// pas le fichier menu.json ou ce code. Pour modifier le menu par défaut, éditez les deux.
 const DEFAULT_MENU = {
     panini: {
         label: "LES PANINI",
@@ -317,6 +322,7 @@ async function loadMenu() {
             return;
         } catch (e) {
             console.warn('[Menu] Failed to parse override, continuing...');
+            showError('Erreur menu: modifications ignorées');
         }
     }
 
@@ -336,6 +342,10 @@ async function loadMenu() {
     // Fallback to DEFAULT_MENU
     MENU = DEFAULT_MENU;
     console.log('[Menu] Using DEFAULT_MENU');
+    if (!navigator.onLine) {
+        const lang = TRANSLATIONS[currentLang] || TRANSLATIONS.fr;
+        showToast(lang.offline_mode + ' - menu par défaut');
+    }
 }
 
 // Initialize default stock if not present
@@ -551,6 +561,7 @@ function saveCartToStorage() {
         }
     } catch (e) {
         console.warn('Failed to save to localStorage:', e);
+        showError('Impossible de sauvegarder le panier');
     }
 }
 
@@ -579,6 +590,7 @@ function loadCartFromStorage() {
         }
     } catch (e) {
         console.warn('Failed to load from localStorage:', e);
+        showError('Impossible de charger le panier sauvegardé');
     }
 }
 
@@ -688,6 +700,26 @@ function showToast(message) {
             toast.remove();
         });
     }, 2500);
+}
+
+function showError(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast error';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.innerHTML = `
+        <span class="toast-icon" aria-hidden="true">❌</span>
+        <span class="toast-message">${message}</span>
+    `;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toast-exit');
+        toast.addEventListener('animationend', () => {
+            toast.remove();
+        });
+    }, 4000);
 }
 
 // ==========================================
@@ -1089,6 +1121,11 @@ async function saveMenuFromEditor() {
     } catch (e) {
         adminStatus.textContent = '❌ JSON invalide: ' + e.message;
         adminStatus.style.color = '#ff6b6b';
+        showError('JSON invalide: ' + e.message);
+        setTimeout(() => {
+            adminStatus.textContent = '';
+            adminStatus.style.color = '';
+        }, 5000);
     }
 }
 
@@ -1617,6 +1654,7 @@ function setGpsError(msg) {
     gpsBtn.classList.add('error');
     gpsBtn.innerHTML = `<span class="gps-icon">❌</span><span class="gps-text">${msg}</span>`;
     gpsInfo.style.display = 'none';
+    showError('GPS: ' + msg);
 }
 
 // Haversine formula to calculate distance between two coordinates in km
@@ -1723,40 +1761,48 @@ function sendOrder(e) {
     const phoneNumber = CONFIG.whatsappNumber;
     const url = `https://wa.me/${phoneNumber}?text=${message}`;
 
-    // Save order to history before clearing
-    const orderData = {
-        items: Object.values(cart).map(item => ({...item})),
-        total: getTotalPrice(),
-        mode: orderMode,
-        name: nameInput.value.trim(),
-        phone: phoneInput.value.trim(),
-        district: districtInput.value.trim(),
-        address: addressInput.value.trim(),
-        specialInstructions: specialInstructionsInput.value.trim()
-    };
-    saveOrderToHistory(orderData);
+    try {
+        // Save order to history before clearing
+        const orderData = {
+            items: Object.values(cart).map(item => ({...item})),
+            total: getTotalPrice(),
+            mode: orderMode,
+            name: nameInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            district: districtInput.value.trim(),
+            address: addressInput.value.trim(),
+            specialInstructions: specialInstructionsInput.value.trim()
+        };
+        saveOrderToHistory(orderData);
 
-    // Décrementer les stocks
-    Object.values(cart).forEach(cartItem => {
-        const category = findCategoryByItemId(cartItem.id);
-        if (category) {
-            const menuItem = MENU[category].items.find(i => i.id === cartItem.id);
-            if (menuItem && menuItem.stock !== undefined) {
-                menuItem.stock = Math.max(0, (menuItem.stock || 0) - cartItem.qty);
+        // Décrementer les stocks
+        Object.values(cart).forEach(cartItem => {
+            const category = findCategoryByItemId(cartItem.id);
+            if (category) {
+                const menuItem = MENU[category].items.find(i => i.id === cartItem.id);
+                if (menuItem && menuItem.stock !== undefined) {
+                    menuItem.stock = Math.max(0, (menuItem.stock || 0) - cartItem.qty);
+                }
             }
-        }
-    });
-    // Sauvegarder MENU modifié dans localStorage
-    localStorage.setItem('lacasadepoulet_menu_override', JSON.stringify(MENU));
-    // Mettre à jour l'affichage des catégories pour refléter les stocks
-    renderCategories();
+        });
+        // Sauvegarder MENU modifié dans localStorage
+        localStorage.setItem('lacasadepoulet_menu_override', JSON.stringify(MENU));
+        // Mettre à jour l'affichage des catégories pour refléter les stocks
+        renderCategories();
 
-    // Open WhatsApp
-    window.open(url, '_blank');
+        // Open WhatsApp
+        window.open(url, '_blank');
 
-    // Reset everything
-    closeModal();
-    clearCart();
+        // Reset everything
+        closeModal();
+        clearCart();
+    } catch (error) {
+        console.error('Order failed:', error);
+        showError('Erreur lors de l\'envoi. Réessayez.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        return;
+    }
 
     // Vider aussi le localStorage complètement après commande
     localStorage.removeItem('lacasadepoulet_cart');
