@@ -1695,9 +1695,8 @@ function buildWhatsAppMessage() {
         msg += `💰 TOTAL : ${total} MAD\n`;
     }
 
-    msg += `━━━━━━━━━━\n`;
-    msg += `⏱️ Temps estimé : ~${CONFIG.estimatedPrepTime} min\n\n`;
-    msg += `Merci ! 🙏`;
+    msg += `━━━━━━━━━━\n\n`;
+    msg += `Merci pour votre commande ! 🙏`;
 
     return encodeURIComponent(msg);
 }
