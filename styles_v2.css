@@ -476,6 +476,8 @@ body::before {
 .category-section {
     display: none;
     animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    scroll-margin-top: 120px; /* Compenser la nav sticky (hauteur ~60px + marge) */
+    padding-top: 20px; /* Espace visuel supplémentaire */
 }
 
 .category-section.active {

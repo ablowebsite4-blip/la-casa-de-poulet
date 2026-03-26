@@ -1390,20 +1390,17 @@ function initMobileOptimizations() {
         }, {passive: true});
     });
 
-    // Smooth scroll to active category on nav click (mobile)
+    // Smooth scroll to active category on nav click
     navList.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                const category = link.dataset.category;
-                const section = document.querySelector(`.category-section[data-category="${category}"]`);
-                if (section) {
-                    // Scroll so the section title appears just below the sticky nav
-                    // Use scrollIntoView with block: 'start' then adjust slightly
-                    section.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+            const category = link.dataset.category;
+            const section = document.querySelector(`.category-section[data-category="${category}"]`);
+            if (section) {
+                // Scroll avec marge pour la nav sticky
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
     });
