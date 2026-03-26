@@ -4,7 +4,7 @@
 const CONFIG = {
     openTime: "11:00",
     closeTime: "23:59",
-    whatsappNumber: "212681138677",
+    whatsappNumber: "212694168759",
     estimatedPrepTime: "20-30", // minutes (range)
     restaurantLat: 33.8971,  // Meknès Zitoune approx
     restaurantLng: -5.5287,
@@ -1363,10 +1363,10 @@ function initFormValidation() {
 }
 
 function validateForm() {
-    // Validate name
+    // Validate name (requis)
     validateInput(nameInput);
 
-    // Validate district
+    // Validate district (optionnel - ne bloque pas)
     validateInput(districtInput);
 
     // Validate phone if required (for emporter/livraison)
@@ -1375,7 +1375,8 @@ function validateForm() {
 
     // Check if form is complete
     const nameValid = nameInput.value.trim() !== '';
-    const districtValid = districtInput.value.trim() !== '';
+    // districtValid est maintenant toujours true (champ optionnel)
+    const districtValid = true; // Quartier optionnel
 
     submitBtn.disabled = !(nameValid && districtValid && phoneValid);
 }
