@@ -3,8 +3,8 @@ const CACHE_NAME = 'casa-de-poulet-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/script.js',
+  '/styles_v2.css',
+  '/script_v5.js',
   '/manifest.json',
   '/icons/icon-72x72.svg',
   '/icons/icon-96x96.svg',
