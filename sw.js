@@ -42,7 +42,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch - cache first, fallback to network
+// Fetch - network first for HTML/CSS/JS, cache first for others
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -53,44 +53,62 @@ self.addEventListener('fetch', (event) => {
   // Skip chrome-extension, devtools, etc.
   if (!url.protocol.startsWith('http')) return;
 
-  event.respondWith(
-    caches.match(request)
-      .then((cachedResponse) => {
-        if (cachedResponse) {
-          // Return cached version immediately (cache-first)
-          return cachedResponse;
-        }
+  // Determine if we should use network-first strategy
+  const isUpdateableAsset = request.url.includes('.html') ||
+                            request.url.includes('.css') ||
+                            request.url.includes('.js');
 
-        // Fetch from network
-        return fetch(request)
-          .then((networkResponse) => {
-            // Don't cache if not successful
-            if (!networkResponse || networkResponse.status !== 200) {
-              return networkResponse;
-            }
-
-            // Clone response to cache
+  if (isUpdateableAsset) {
+    // Network-first strategy for HTML/CSS/JS (allows F5 to fetch new versions)
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          // Cache the new version
+          if (networkResponse && networkResponse.status === 200) {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then((cache) => {
-              // Only cache same-origin and static assets
-              if (url.origin === location.origin ||
-                  STATIC_ASSETS.some(asset => request.url.includes(asset))) {
-                cache.put(request, responseClone);
-              }
+              cache.put(request, responseClone);
             });
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          // Fallback to cache if network fails
+          return caches.match(request);
+        })
+    );
+  } else {
+    // Cache-first strategy for static assets (icons, fonts, etc.)
+    event.respondWith(
+      caches.match(request)
+        .then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
 
-            return networkResponse;
-          })
-          .catch(() => {
-            // Offline fallback for navigation requests
-            if (request.mode === 'navigate') {
-              return caches.match('/index.html');
-            }
-            // For other requests, return a simple offline response
-            return new Response('Offline', { status: 503 });
-          });
-      })
-  );
+          return fetch(request)
+            .then((networkResponse) => {
+              if (networkResponse && networkResponse.status === 200) {
+                const responseClone = networkResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                  if (url.origin === location.origin ||
+                      STATIC_ASSETS.some(asset => request.url.includes(asset))) {
+                    cache.put(request, responseClone);
+                  }
+                });
+              }
+              return networkResponse;
+            })
+            .catch(() => {
+              // Offline fallback for navigation requests
+              if (request.mode === 'navigate') {
+                return caches.match('/index.html');
+              }
+              return new Response('Offline', { status: 503 });
+            });
+        })
+    );
+  }
 });
 
 // Push notification handling (optional for future)
