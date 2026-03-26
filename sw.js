@@ -1,5 +1,5 @@
 // Service Worker for LA CASA DE POULET PWA
-const CACHE_NAME = 'casa-de-poulet-v1';
+const CACHE_NAME = 'casa-de-poulet-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

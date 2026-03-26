@@ -5,7 +5,10 @@
       "Bash(cd:*)",
       "Bash(ls -la *.js)",
       "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v3.js)",
-      "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v4.js)"
+      "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v4.js)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
