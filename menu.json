@@ -55,7 +55,8 @@
       {
         "id": "pan-mer",
         "name": "Panini Fruit de Mer",
-        "price": 30
+        "price": 30,
+        "image": "images/21.jpeg"
       },
       {
         "id": "pan-crispy",

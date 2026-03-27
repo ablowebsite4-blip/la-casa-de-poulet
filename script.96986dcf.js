@@ -139,7 +139,7 @@ const DEFAULT_MENU = {
             { id: "pan-charcut", name: "Panini Charcuterie", price: 25 , image: "images/25.jpeg"},
             { id: "pan-negutte", name: "Panini Negutte", price: 25 , image: "images/23.jpeg"},
             { id: "pan-cordon", name: "Panini Cordon Bleu", price: 30 , image: "images/26.jpeg"},
-            { id: "pan-mer", name: "Panini Fruit de Mer", price: 30 },
+            { id: "pan-mer", name: "Panini Fruit de Mer", price: 30 , image: "images/21.jpeg"},
             { id: "pan-crispy", name: "Panini Crispy", price: 25, badge: "⚡ Crispy", badgeColor: "orange" }
         ]
     },
