@@ -131,14 +131,14 @@ const DEFAULT_MENU = {
         labelAr: "بانيني",
         emoji: "🥙",
         items: [
-            { id: "pan-fromage", name: "Panini Fromage", price: 20 , image: "images/4.jpeg"},
+            { id: "pan-fromage", name: "Panini Fromage", price: 20 , image: "images/22.jpeg"},
             { id: "pan-poulet", name: "Panini Poulet", price: 23 , image: "images/10.jpeg"},
-            { id: "pan-dinde", name: "Panini Dinde", price: 23 },
-            { id: "pan-viandh", name: "Panini Viande H.", price: 23 },
-            { id: "pan-mixt", name: "Panini Mixt", price: 25 },
-            { id: "pan-charcut", name: "Panini Charcuterie", price: 25 },
-            { id: "pan-negutte", name: "Panini Negutte", price: 25 },
-            { id: "pan-cordon", name: "Panini Cordon Bleu", price: 30 },
+            { id: "pan-dinde", name: "Panini Dinde", price: 23 , image: "images/27.jpeg"},
+            { id: "pan-viandh", name: "Panini Viande H.", price: 23 , image: "images/24.jpeg"},
+            { id: "pan-mixt", name: "Panini Mixt", price: 25 , image: "images/28.jpeg"},
+            { id: "pan-charcut", name: "Panini Charcuterie", price: 25 , image: "images/25.jpeg"},
+            { id: "pan-negutte", name: "Panini Negutte", price: 25 , image: "images/23.jpeg"},
+            { id: "pan-cordon", name: "Panini Cordon Bleu", price: 30 , image: "images/26.jpeg"},
             { id: "pan-mer", name: "Panini Fruit de Mer", price: 30 },
             { id: "pan-crispy", name: "Panini Crispy", price: 25, badge: "⚡ Crispy", badgeColor: "orange" }
         ]
@@ -265,7 +265,7 @@ const DEFAULT_MENU = {
         labelAr: "أطباق",
         emoji: "🍽",
         items: [
-            { id: "pla-poulet", name: "Plat Poulet", priceSimple: 25, priceSalade: 35, isPlat: true, image: "images/plat-poulet-medium.jpg" },
+            { id: "pla-poulet", name: "Plat Poulet", priceSimple: 25, priceSalade: 35, isPlat: true , image: "images/15.jpeg"},
             { id: "pla-dinde", name: "Plat Dinde", priceSimple: 25, priceSalade: 35, isPlat: true },
             { id: "pla-viandh", name: "Plat Viande H.", priceSimple: 25, priceSalade: 35, isPlat: true },
             { id: "pla-mixt", name: "Plat Mixt", priceSimple: 25, priceSalade: 35, isPlat: true },
@@ -299,7 +299,7 @@ const DEFAULT_MENU = {
         emoji: "⚡",
         items: [
             { id: "cri-tacos", name: "Tacos Crispy", price: 28, badge: "⚡ Crispy", badgeColor: "orange" },
-            { id: "cri-panini", name: "Panini Crispy", price: 25, badge: "⚡ Crispy", badgeColor: "orange" },
+            { id: "cri-panini", name: "Panini Crispy", price: 25, badge: "⚡ Crispy", badgeColor: "orange" , image: "images/21.jpeg"},
             { id: "cri-pasticc", name: "Pasticcio Crispy", price: 28, badge: "⚡ Crispy", badgeColor: "orange" },
             { id: "cri-sandw", name: "Sandwich Crispy", price: 17, badge: "⚡ Crispy", badgeColor: "orange" },
             { id: "cri-plat", name: "Plat Crispy", price: 38, badge: "⚡ Crispy", badgeColor: "orange" },

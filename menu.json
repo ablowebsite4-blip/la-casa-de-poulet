@@ -8,7 +8,7 @@
         "id": "pan-fromage",
         "name": "Panini Fromage",
         "price": 20,
-        "image": "images/4.jpeg"
+        "image": "images/22.jpeg"
       },
       {
         "id": "pan-poulet",
@@ -19,32 +19,38 @@
       {
         "id": "pan-dinde",
         "name": "Panini Dinde",
-        "price": 23
+        "price": 23,
+        "image": "images/27.jpeg"
       },
       {
         "id": "pan-viandh",
         "name": "Panini Viande H.",
-        "price": 23
+        "price": 23,
+        "image": "images/24.jpeg"
       },
       {
         "id": "pan-mixt",
         "name": "Panini Mixt",
-        "price": 25
+        "price": 25,
+        "image": "images/28.jpeg"
       },
       {
         "id": "pan-charcut",
         "name": "Panini Charcuterie",
-        "price": 25
+        "price": 25,
+        "image": "images/25.jpeg"
       },
       {
         "id": "pan-negutte",
         "name": "Panini Negutte",
-        "price": 25
+        "price": 25,
+        "image": "images/23.jpeg"
       },
       {
         "id": "pan-cordon",
         "name": "Panini Cordon Bleu",
-        "price": 30
+        "price": 30,
+        "image": "images/26.jpeg"
       },
       {
         "id": "pan-mer",
@@ -637,7 +643,8 @@
         "name": "Panini Crispy",
         "price": 25,
         "badge": "⚡ Crispy",
-        "badgeColor": "orange"
+        "badgeColor": "orange",
+        "image": "images/21.jpeg"
       },
       {
         "id": "cri-pasticc",
