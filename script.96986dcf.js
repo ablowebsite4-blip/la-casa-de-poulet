@@ -13,6 +13,17 @@ const CONFIG = {
 };
 
 // ==========================================
+// ADMIN SECURITY
+// ==========================================
+const ADMIN_CONFIG = {
+    // SHA-256 hash du mot de passe: "CasaDePouletAdmin2025!"
+    // Générez votre propre hash avec: node -e "console.log(require('crypto').createHash('sha256').update('VOTRE_MOT_DE_PASSE').digest('hex'))"
+    passwordHash: "6ca3634577a51d27fd0c5134492fbb30c8f823c5d6a3605630245a442ef31075",
+    sessionKey: "lacasadepoulet_admin_session",
+    sessionDurationMs: 60 * 60 * 1000 // 1 heure
+};
+
+// ==========================================
 // TRANSLATIONS
 // ==========================================
 const TRANSLATIONS = {
@@ -53,7 +64,13 @@ const TRANSLATIONS = {
         mode_livraison: "Livraison",
         phone: "📱 Téléphone",
         phone_ph: "06 12 34 56 78",
-        history: "Historique"
+        history: "Historique",
+        admin_login: "🔐 Administration",
+        admin_login_desc: "Veuillez entrer le mot de passe administrateur pour continuer.",
+        password: "Mot de passe",
+        login: "Se connecter",
+        admin_connected: "Connecté en tant qu'administrateur",
+        admin_disconnected: "Déconnecté"
     },
     ar: {
         open: "مفتوح",
@@ -92,7 +109,13 @@ const TRANSLATIONS = {
         mode_livraison: "توصيل",
         phone: "📱 الهاتف",
         phone_ph: "06 12 34 56 78",
-        history: "السجل"
+        history: "السجل",
+        admin_login: "🔐 الإدارة",
+        admin_login_desc: "أدخل كلمة مرور المسؤول للمتابعة.",
+        password: "كلمة المرور",
+        login: "تسجيل الدخول",
+        admin_connected: "تم تسجيل الدخول كمسؤول",
+        admin_disconnected: "تم تسجيل الخروج"
     }
 };
 
@@ -432,6 +455,17 @@ const historyModal = document.getElementById('historyModal');
 const historyOverlay = document.getElementById('historyOverlay');
 const historyClose = document.getElementById('historyClose');
 const historyList = document.getElementById('historyList');
+
+// Login Modal Elements
+const loginModal = document.getElementById('loginModal');
+const loginOverlay = document.getElementById('loginOverlay');
+const loginClose = document.getElementById('loginClose');
+const loginForm = document.getElementById('loginForm');
+const adminPasswordInput = document.getElementById('adminPassword');
+const loginError = document.getElementById('loginError');
+const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+// Admin Modal Elements
 const adminBtn = document.getElementById('adminBtn');
 const adminModal = document.getElementById('adminModal');
 const adminOverlay = document.getElementById('adminOverlay');
@@ -439,6 +473,7 @@ const adminClose = document.getElementById('adminClose');
 const menuEditor = document.getElementById('menuEditor');
 const adminSaveBtn = document.getElementById('adminSaveBtn');
 const adminResetBtn = document.getElementById('adminResetBtn');
+const adminLogoutBtn = document.getElementById('adminLogoutBtn');
 const adminStatus = document.getElementById('adminStatus');
 
 // ==========================================
@@ -1088,6 +1123,103 @@ function saveOrderToHistory(orderData) {
 // ==========================================
 // ADMIN
 // ==========================================
+// ==========================================
+// ADMIN AUTHENTICATION
+// ==========================================
+function isAdminAuthenticated() {
+    const session = sessionStorage.getItem(ADMIN_CONFIG.sessionKey);
+    if (!session) return false;
+    try {
+        const sessionData = JSON.parse(session);
+        return sessionData.authenticated && sessionData.expires > Date.now();
+    } catch (e) {
+        console.warn('Admin session parse error:', e);
+        return false;
+    }
+}
+
+function setAdminSession() {
+    const sessionData = {
+        authenticated: true,
+        expires: Date.now() + ADMIN_CONFIG.sessionDurationMs
+    };
+    sessionStorage.setItem(ADMIN_CONFIG.sessionKey, JSON.stringify(sessionData));
+}
+
+function clearAdminSession() {
+    sessionStorage.removeItem(ADMIN_CONFIG.sessionKey);
+}
+
+async function verifyAdminPassword(password) {
+    try {
+        const msgBuffer = new TextEncoder().encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex === ADMIN_CONFIG.passwordHash;
+    } catch (error) {
+        console.error('Password verification error:', error);
+        // Fallback for older browsers without crypto.subtle
+        return false;
+    }
+}
+
+function showLoginModal() {
+    if (loginError) loginError.style.display = 'none';
+    if (loginForm) loginForm.reset();
+    if (adminPasswordInput) adminPasswordInput.focus();
+    if (loginModal) loginModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideLoginModal() {
+    if (loginModal) loginModal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function handleAdminLogin(e) {
+    e.preventDefault();
+    const password = adminPasswordInput.value;
+    if (!password) return;
+
+    // Disable button during verification
+    if (loginSubmitBtn) {
+        loginSubmitBtn.disabled = true;
+        loginSubmitBtn.textContent = 'Vérification...';
+    }
+
+    verifyAdminPassword(password).then(isValid => {
+        // Re-enable button
+        if (loginSubmitBtn) {
+            loginSubmitBtn.disabled = false;
+            loginSubmitBtn.innerHTML = '<span data-i18n="login">Se connecter</span>';
+        }
+
+        if (isValid) {
+            setAdminSession();
+            hideLoginModal();
+            openAdminModal();
+            if (adminStatus) adminStatus.textContent = '';
+            showToast(TRANSLATIONS[currentLang].admin_connected || 'Connecté', 'success');
+        } else {
+            if (loginError) {
+                loginError.textContent = 'Mot de passe incorrect';
+                loginError.style.display = 'block';
+            }
+            if (adminPasswordInput) {
+                adminPasswordInput.value = '';
+                adminPasswordInput.focus();
+            }
+            // Clear session on failed attempt? Optional
+            clearAdminSession();
+        }
+    });
+}
+
+function closeLoginModal() {
+    hideLoginModal();
+}
+
 function initAdmin() {
     // Show admin button if ?admin=1 in URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -1096,22 +1228,47 @@ function initAdmin() {
     }
 
     if (adminBtn) {
-        adminBtn.addEventListener('click', openAdminModal);
+        adminBtn.addEventListener('click', () => {
+            if (isAdminAuthenticated()) {
+                openAdminModal();
+            } else {
+                showLoginModal();
+            }
+        });
     }
+
+    // Login modal events
+    if (loginForm) loginForm.addEventListener('submit', handleAdminLogin);
+    if (loginOverlay) loginOverlay.addEventListener('click', closeLoginModal);
+    if (loginClose) loginClose.addEventListener('click', closeLoginModal);
+
+    // Admin modal events
     if (adminClose) adminClose.addEventListener('click', closeAdminModal);
     if (adminOverlay) adminOverlay.addEventListener('click', closeAdminModal);
     if (adminSaveBtn) adminSaveBtn.addEventListener('click', saveMenuFromEditor);
     if (adminResetBtn) adminResetBtn.addEventListener('click', resetMenu);
+    if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', () => {
+        clearAdminSession();
+        closeAdminModal();
+        showToast(TRANSLATIONS[currentLang].admin_disconnected || 'Déconnecté', 'info');
+    });
 }
 
 function openAdminModal() {
+    // Security: verify authentication before showing admin
+    if (!isAdminAuthenticated()) {
+        showLoginModal();
+        return;
+    }
     menuEditor.value = JSON.stringify(MENU, null, 2);
     adminStatus.textContent = '';
     adminModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeAdminModal() {
     adminModal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 async function saveMenuFromEditor() {
@@ -1260,9 +1417,20 @@ function initModal() {
     orderBtn.addEventListener('click', openModal);
 
     // Close modal on Escape key
+    // Global Escape key handler for all modals
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+        if (e.key === 'Escape') {
+            if (modal && modal.classList.contains('active')) {
+                closeModal();
+            } else if (loginModal && loginModal.classList.contains('active')) {
+                closeLoginModal();
+            } else if (historyModal && historyModal.classList.contains('active')) {
+                closeHistoryModal();
+            } else if (adminModal && adminModal.classList.contains('active')) {
+                closeAdminModal();
+            } else if (confirmModal && confirmModal.classList.contains('active')) {
+                closeConfirmModal();
+            }
         }
     });
 

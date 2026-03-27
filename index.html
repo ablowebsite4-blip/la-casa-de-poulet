@@ -45,6 +45,9 @@
         <button class="lang-toggle" id="historyBtn" title="Historique des commandes" aria-label="Historique des commandes">
             🕒
         </button>
+        <button class="lang-toggle" id="adminBtn" title="Administration" aria-label="Administration" style="display: none;">
+            ⚙️
+        </button>
     </div>
     <header class="header">
         <div class="hero-bg"></div>
@@ -243,7 +246,10 @@
             <div class="modal-drag-handle" tabindex="-1"></div>
             <div class="modal-header">
                 <h2>⚙️ Administration du Menu</h2>
-                <button class="modal-close" id="adminClose" aria-label="Fermer">&times;</button>
+                <div style="display:flex; gap:8px;">
+                    <button id="adminLogoutBtn" title="Déconnexion" aria-label="Déconnexion" style="background:none; border:none; color:var(--white-dim); cursor:pointer; font-size:20px; padding:4px 8px; border-radius:4px;" title="Se déconnecter">🚪</button>
+                    <button class="modal-close" id="adminClose" aria-label="Fermer">&times;</button>
+                </div>
             </div>
             <div class="modal-body" style="padding: 24px;">
                 <p style="color:rgba(255,255,255,0.6); margin-bottom:16px; font-size:13px;">
@@ -261,6 +267,33 @@
 
     <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Login Modal for Admin -->
+    <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-label="Connexion administrateur">
+        <div class="modal-overlay" id="loginOverlay" tabindex="-1"></div>
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-drag-handle" tabindex="-1"></div>
+            <div class="modal-header">
+                <h2 data-i18n="admin_login">🔐 Administration</h2>
+                <button class="modal-close" id="loginClose" aria-label="Fermer">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color:rgba(255,255,255,0.7); margin-bottom:16px; font-size:14px;" data-i18n="admin_login_desc">
+                    Veuillez entrer le mot de passe administrateur pour continuer.
+                </p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="adminPassword" data-i18n="password">Mot de passe</label>
+                        <input type="password" id="adminPassword" required placeholder="Mot de passe" autocomplete="current-password" style="width:100%; padding:12px; border-radius:8px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.2); color:white; font-size:14px;">
+                    </div>
+                    <div id="loginError" style="color:#ff4444; margin-top:8px; font-size:13px; display:none;"></div>
+                    <button type="submit" class="submit-btn" id="loginSubmitBtn" style="margin-top:16px; width:100%;">
+                        <span data-i18n="login">Se connecter</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Confirm Modal -->
     <div class="modal confirm-modal" id="confirmModal" style="align-items: center;">
