@@ -915,7 +915,14 @@ function createCard(item, category) {
         card.classList.add('drink-card');
     }
 
+    // Image
+    let imageHTML = '';
+    if (item.image) {
+        imageHTML = `<img src="${item.image}" alt="${item.name}" class="card-image" loading="lazy" />`;
+    }
+
     card.innerHTML = `
+        ${imageHTML}
         ${emojiHTML}
         <div class="card-header">
             <div class="card-name">${item.name}</div>

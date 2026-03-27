@@ -4,6 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "npx serve .",
-    "build": "rm -rf public && mkdir -p public && cp -r * public/ 2>/dev/null || true"
+    "build": "rm -rf public && mkdir -p public && cp -r * public/ 2>/dev/null || true",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "sharp": "^0.34.5"
   }
 }
