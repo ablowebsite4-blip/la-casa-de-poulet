@@ -131,8 +131,8 @@ const DEFAULT_MENU = {
         labelAr: "بانيني",
         emoji: "🥙",
         items: [
-            { id: "pan-fromage", name: "Panini Fromage", price: 20 },
-            { id: "pan-poulet", name: "Panini Poulet", price: 23 },
+            { id: "pan-fromage", name: "Panini Fromage", price: 20 , image: "images/4.jpeg"},
+            { id: "pan-poulet", name: "Panini Poulet", price: 23 , image: "images/10.jpeg"},
             { id: "pan-dinde", name: "Panini Dinde", price: 23 },
             { id: "pan-viandh", name: "Panini Viande H.", price: 23 },
             { id: "pan-mixt", name: "Panini Mixt", price: 25 },
@@ -149,7 +149,7 @@ const DEFAULT_MENU = {
         emoji: "🍔",
         items: [
             { id: "bur-simple", name: "Burger Simple", price: 20 },
-            { id: "bur-cheese", name: "Cheese Burger", price: 25 },
+            { id: "bur-cheese", name: "Cheese Burger", price: 25 , image: "images/13.jpeg"},
             { id: "bur-egg", name: "Egg Burger", price: 30 },
             { id: "bur-beeg", name: "Beeg Burger", price: 35 },
             { id: "bur-chiken", name: "Chiken Burger", price: 30 }
@@ -160,7 +160,7 @@ const DEFAULT_MENU = {
         labelAr: "بيتزا",
         emoji: "🍕",
         items: [
-            { id: "piz-marguareta", name: "Pizza Marguareta", priceP: 20, priceM: 30, isPizza: true },
+            { id: "piz-marguareta", name: "Pizza Marguareta", priceP: 20, priceM: 30, isPizza: true , image: "images/16.jpeg"},
             { id: "piz-poulet", name: "Pizza Poulet", priceP: 25, priceM: 35, isPizza: true },
             { id: "piz-dinde", name: "Pizza Dinde", priceP: 25, priceM: 35, isPizza: true },
             { id: "piz-viandh", name: "Pizza Viande H.", priceP: 25, priceM: 35, isPizza: true },
@@ -176,7 +176,7 @@ const DEFAULT_MENU = {
         labelAr: "طاغوس",
         emoji: "🌯",
         items: [
-            { id: "tac-poulet", name: "Tacos Poulet", price: 25 },
+            { id: "tac-poulet", name: "Tacos Poulet", price: 25 , image: "images/18.jpeg"},
             { id: "tac-dinde", name: "Tacos Dinde", price: 25 },
             { id: "tac-viandh", name: "Tacos Viande H.", price: 25 },
             { id: "tac-mixt", name: "Tacos Mixt", price: 30 },
@@ -184,7 +184,7 @@ const DEFAULT_MENU = {
             { id: "tac-negutte", name: "Tacos Negutte", price: 25 },
             { id: "tac-cordon", name: "Tacos Cordon Bleu", price: 30 },
             { id: "tac-mer", name: "Tacos Fruit de Mer", price: 35 },
-            { id: "tacg-poulet", name: "Tacos Poulet", price: 30, badge: "Gratiné", badgeColor: "red" },
+            { id: "tacg-poulet", name: "Tacos Poulet", price: 30, badge: "Gratiné", badgeColor: "red" , image: "images/17.jpeg"},
             { id: "tacg-dinde", name: "Tacos Dinde", price: 30, badge: "Gratiné", badgeColor: "red" },
             { id: "tacg-viandh", name: "Tacos Viande H.", price: 30, badge: "Gratiné", badgeColor: "red" },
             { id: "tacg-mixt", name: "Tacos Mixt", price: 35, badge: "Gratiné", badgeColor: "red" },
@@ -192,7 +192,7 @@ const DEFAULT_MENU = {
             { id: "tacg-negutte", name: "Tacos Negutte", price: 30, badge: "Gratiné", badgeColor: "red" },
             { id: "tacg-cordon", name: "Tacos Cordon Bleu", price: 35, badge: "Gratiné", badgeColor: "red" },
             { id: "tacg-mer", name: "Tacos Fruit de Mer", price: 40, badge: "Gratiné", badgeColor: "red" },
-            { id: "tac-bowl", name: "Tacos Bowl", price: 30, badge: "⭐ Spécial", badgeColor: "yellow", fullWidth: true }
+            { id: "tac-bowl", name: "Tacos Bowl", price: 30, badge: "⭐ Spécial", badgeColor: "yellow", fullWidth: true , image: "images/3.jpeg"}
         ]
     },
     chawarma: {
@@ -200,7 +200,7 @@ const DEFAULT_MENU = {
         labelAr: "شاورما",
         emoji: "🥗",
         items: [
-            { id: "chaw-poulet", name: "Chawarma Poulet", price: 25 },
+            { id: "chaw-poulet", name: "Chawarma Poulet", price: 25 , image: "images/20.jpeg"},
             { id: "chaw-mixt", name: "Chawarma Mixt", price: 30 },
             { id: "chaw-fromage", name: "Chawarma Fromage", price: 28 },
             { id: "chaw-plat", name: "Plat Chawarma", price: 35, badge: "⭐ Plat", badgeColor: "yellow" }
@@ -227,7 +227,7 @@ const DEFAULT_MENU = {
         labelAr: "ساندويش",
         emoji: "🥖",
         items: [
-            { id: "san-poulet", name: "Sandwich Poulet", price: 15 },
+            { id: "san-poulet", name: "Sandwich Poulet", price: 15 , image: "images/2.jpeg"},
             { id: "san-dinde", name: "Sandwich Dinde", price: 15 },
             { id: "san-viandh", name: "Sandwich Viande H.", price: 15 },
             { id: "san-mixt", name: "Sandwich Mixt", price: 15 },
@@ -256,7 +256,7 @@ const DEFAULT_MENU = {
             { id: "qus-poulet", name: "Qassadilla Poulet", price: 30 },
             { id: "qus-dinde", name: "Qassadilla Dinde", price: 30 },
             { id: "qus-viandh", name: "Qassadilla Viande H.", price: 30 },
-            { id: "qus-mixt", name: "Qassadilla Mixt", price: 30 },
+            { id: "qus-mixt", name: "Qassadilla Mixt", price: 30 , image: "images/8.jpeg"},
             { id: "qus-crispy", name: "Quassadilla Crispy", price: 28, badge: "⚡ Crispy", badgeColor: "orange" }
         ]
     },
@@ -272,7 +272,7 @@ const DEFAULT_MENU = {
             { id: "pla-negutte", name: "Plat Negutte", priceSimple: 25, priceSalade: 35, isPlat: true },
             { id: "pla-saucisse", name: "Plat Saucisse", priceSimple: 25, priceSalade: 35, isPlat: true },
             { id: "pla-chawarma", name: "Plat Chawarma", price: 35, badge: "⭐ Spécial", badgeColor: "yellow" },
-            { id: "pla-crispy", name: "Plat Crispy", price: 38, badge: "⚡ Crispy", badgeColor: "orange" }
+            { id: "pla-crispy", name: "Plat Crispy", price: 38, badge: "⚡ Crispy", badgeColor: "orange" , image: "images/12.jpeg"}
         ]
     },
     poulet: {
@@ -282,15 +282,15 @@ const DEFAULT_MENU = {
         items: [
             { id: "rot-quart", name: "1/4 Poulet Rôti", price: 30 },
             { id: "rot-demi", name: "1/2 Poulet Rôti", price: 60 },
-            { id: "rot-complet", name: "Poulet Rôti Complet", price: 120 },
+            { id: "rot-complet", name: "Poulet Rôti Complet", price: 120 , image: "images/11.jpeg"},
             { id: "dgm-quart", name: "1/4 Poulet Dgmira", price: 30, note: "دخمير" },
             { id: "dgm-demi", name: "1/2 Poulet Dgmira", price: 60, note: "دخمير" },
             { id: "dgm-complet", name: "Poulet Complet Dgmira", price: 120, note: "دخمير" },
-            { id: "taj-pruneaux", name: "Tajine aux Pruneaux", price: 40, note: "طاجين بالبرقوق" },
-            { id: "taj-legumes", name: "Tajine aux Légumes", price: 40, note: "طاجين بالخضر" },
+            { id: "taj-pruneaux", name: "Tajine aux Pruneaux", price: 40, note: "طاجين بالبرقوق" , image: "images/6.jpeg"},
+            { id: "taj-legumes", name: "Tajine aux Légumes", price: 40, note: "طاجين بالخضر" , image: "images/19.jpeg"},
             { id: "csc-poulet", name: "Couscous Poulet", price: 30, badge: "Vendredi", badgeColor: "green" },
-            { id: "csc-viande", name: "Couscous Viande", price: 40, badge: "Vendredi", badgeColor: "green" },
-            { id: "rfi-rfissa", name: "Rfissa", price: 40, badge: "Mercredi", badgeColor: "green", note: "رفيسة" }
+            { id: "csc-viande", name: "Couscous Viande", price: 40, badge: "Vendredi", badgeColor: "green" , image: "images/9.jpeg"},
+            { id: "rfi-rfissa", name: "Rfissa", price: 40, badge: "Mercredi", badgeColor: "green", note: "رفيسة" , image: "images/14.jpeg"}
         ]
     },
     crispy: {
@@ -315,7 +315,7 @@ const DEFAULT_MENU = {
             { id: "sal-nicoise", name: "Salade Niçoise", price: 10 },
             { id: "sal-maroc", name: "Salade Marocain", price: 10 },
             { id: "sal-varie", name: "Salade Varié", price: 17 },
-            { id: "sal-riche", name: "Salade Riche", price: 32, badge: "⭐ Premium", badgeColor: "yellow" }
+            { id: "sal-riche", name: "Salade Riche", price: 32, badge: "⭐ Premium", badgeColor: "yellow" , image: "images/7.jpeg"}
         ]
     },
     boissons: {
