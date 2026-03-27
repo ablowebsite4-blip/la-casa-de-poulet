@@ -848,6 +848,7 @@ function createCard(item, category) {
     card.className = 'card';
     card.dataset.cardId = item.id; // pour updateCardDisplay()
     if (item.fullWidth) card.classList.add('full-width');
+    if (item.image) card.classList.add('has-image');
 
     // Get current price
     let currentPrice = getCurrentPrice(item);
@@ -921,8 +922,8 @@ function createCard(item, category) {
         imageHTML = `<img src="${item.image}" alt="${item.name}" class="card-image" loading="lazy" />`;
     }
 
-    card.innerHTML = `
-        ${imageHTML}
+    // Content wrapper (always wrap, but will be used differently for image cards)
+    let contentHTML = `
         ${emojiHTML}
         <div class="card-header">
             <div class="card-name">${item.name}</div>
@@ -934,6 +935,16 @@ function createCard(item, category) {
         </div>
         ${toggleHTML}
         ${qtyHTML}
+    `;
+
+    // If has image, wrap content for absolute positioning context
+    if (item.image) {
+        contentHTML = `<div class="card-content">${contentHTML}</div>`;
+    }
+
+    card.innerHTML = `
+        ${imageHTML}
+        ${contentHTML}
     `;
 
     return card;
