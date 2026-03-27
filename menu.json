@@ -138,7 +138,7 @@
     "labelAr": "أطباق",
     "emoji": "🍽",
     "items": [
-      { "id": "pla-poulet", "name": "Plat Poulet", "priceSimple": 25, "priceSalade": 35, "isPlat": true, "image": "/images/plat-poulet-medium.jpg" },
+      { "id": "pla-poulet", "name": "Plat Poulet", "priceSimple": 25, "priceSalade": 35, "isPlat": true, "image": "images/plat-poulet-medium.jpg" },
       { "id": "pla-dinde", "name": "Plat Dinde", "priceSimple": 25, "priceSalade": 35, "isPlat": true },
       { "id": "pla-viandh", "name": "Plat Viande H.", "priceSimple": 25, "priceSalade": 35, "isPlat": true },
       { "id": "pla-mixt", "name": "Plat Mixt", "priceSimple": 25, "priceSalade": 35, "isPlat": true },
