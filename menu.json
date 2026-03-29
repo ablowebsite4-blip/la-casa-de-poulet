@@ -323,7 +323,8 @@
       {
         "id": "pas-poulet",
         "name": "Pasticcio Poulet",
-        "price": 25
+        "price": 25,
+        "image": "images/pasticcio.jpeg"
       },
       {
         "id": "pas-dinde",
@@ -378,7 +379,7 @@
         "id": "san-poulet",
         "name": "Sandwich Poulet",
         "price": 15,
-        "image": "images/2.jpeg"
+        "image": "images/sandw-poulet-grille.jpeg"
       },
       {
         "id": "san-dinde",
@@ -422,7 +423,8 @@
       {
         "id": "bag-poulet",
         "name": "Baguetto Poulet",
-        "price": 25
+        "price": 25,
+        "image": "images/sandw-poulet-grille.jpeg"
       },
       {
         "id": "bag-dinde",
@@ -456,7 +458,8 @@
       {
         "id": "qus-poulet",
         "name": "Qassadilla Poulet",
-        "price": 30
+        "price": 30,
+        "image": "images/quesadillas-legumes.jpeg"
       },
       {
         "id": "qus-dinde",
@@ -472,7 +475,7 @@
         "id": "qus-mixt",
         "name": "Qassadilla Mixt",
         "price": 30,
-        "image": "images/8.jpeg"
+        "image": "images/quesadillas-legumes.jpeg"
       },
       {
         "id": "qus-crispy",
@@ -494,7 +497,7 @@
         "priceSimple": 25,
         "priceSalade": 35,
         "isPlat": true,
-        "image": "images/15.jpeg"
+        "image": "images/rfissa.jpeg"
       },
       {
         "id": "pla-dinde",
@@ -543,8 +546,7 @@
         "name": "Plat Crispy",
         "price": 38,
         "badge": "⚡ Crispy",
-        "badgeColor": "orange",
-        "image": "images/12.jpeg"
+        "badgeColor": "orange"
       }
     ]
   },
@@ -567,7 +569,7 @@
         "id": "rot-complet",
         "name": "Poulet Rôti Complet",
         "price": 120,
-        "image": "images/11.jpeg"
+        "image": "images/poulet-roti.jpeg"
       },
       {
         "id": "dgm-quart",

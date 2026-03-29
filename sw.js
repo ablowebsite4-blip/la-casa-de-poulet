@@ -1,5 +1,5 @@
 // Service Worker for LA CASA DE POULET PWA
-const CACHE_NAME = 'casa-de-poulet-v3';
+const CACHE_NAME = 'casa-de-poulet-v9';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -56,7 +56,8 @@ self.addEventListener('fetch', (event) => {
   // Determine if we should use network-first strategy
   const isUpdateableAsset = request.url.includes('.html') ||
                             request.url.includes('.css') ||
-                            request.url.includes('.js');
+                            request.url.includes('.js') ||
+                            request.url.includes('.json');
 
   if (isUpdateableAsset) {
     // Network-first strategy for HTML/CSS/JS (allows F5 to fetch new versions)

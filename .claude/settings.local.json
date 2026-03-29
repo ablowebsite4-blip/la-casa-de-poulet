@@ -8,7 +8,10 @@
       "Bash(grep -c \"phoneFormGroup.style.display = ''none''\" script_v4.js)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(node:*)",
+      "Bash(npm install:*)",
+      "Bash(git reset:*)"
     ]
   }
 }
