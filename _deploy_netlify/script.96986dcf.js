@@ -274,6 +274,7 @@ const adminStatus = document.getElementById('adminStatus');
 // INIT
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
+    if (floatingCallBtn) floatingCallBtn.href = `tel:+${CONFIG.whatsappNumber}`;
     await loadMenu();
     checkShopStatus();
     loadCartFromStorage(); // Load saved cart first
